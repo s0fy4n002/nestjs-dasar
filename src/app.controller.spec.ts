@@ -11,12 +11,30 @@ describe('AppController', () => {
       providers: [AppService],
     }).compile();
 
-    appController = app.get<AppController>(AppController);
+    appController = await app.resolve<AppController>(AppController);
   });
 
-  describe('root', () => {
-    it('should return "Hello World!"', () => {
-      expect(appController.getHello()).toBe('Hello World!');
+  describe('getHello', () => {
+    it('should return correct message and users data', () => {
+      const result = appController.getHello();
+
+      // Cek structure object
+      expect(result).toEqual({
+        message: 'data message',
+        users: [
+          { name: 'Andi', age: 25 },
+          { name: 'Budi', age: 30 },
+          { name: 'Citra', age: 28 },
+        ],
+      });
+
+      // Atau cek individual properties
+      expect(result.message).toBe('data message');
+      expect(result.users).toHaveLength(3);
+      expect(result.users[0].name).toBe('Andi');
+      expect(result.users[0].age).toBe(25);
     });
   });
+
+
 });

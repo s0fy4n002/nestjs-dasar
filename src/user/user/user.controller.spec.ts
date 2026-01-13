@@ -13,6 +13,7 @@ describe('UserController', () => {
   });
 
   it('should be defined', () => {
-    expect(controller).toBeDefined();
+    const response  = controller.sayHello('');
+    expect(response).toBe('tidak ada nama')
   });
 });

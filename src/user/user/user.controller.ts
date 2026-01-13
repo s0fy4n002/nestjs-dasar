@@ -11,14 +11,14 @@ export class UserController {
         return 'POST method';
     }
 
-    // @Get()
-    // findAll(@Query('name') name: string, @Ip() ip:any, @HostParam() host:any):string{
-    //     console.log('host: ',host)
-    //     if(name){
-    //         return `findAll get method IP: ${ip} name : ${name} hostParam: ${host}`
-    //     }
-    //     return `findAll get method ${ip} hostParam: ${host}`
-    // }
+    @Get()
+    sayHello(@Query('name') name: string):string{
+        if(!name){
+            return `tidak ada nama`
+        }
+        return `nama adalah ${name}`
+    }
+    
 
     @Get()
     @Header('Content-Type', 'application/json')
