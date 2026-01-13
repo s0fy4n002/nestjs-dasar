@@ -1,11 +1,17 @@
-import { Controller, Get, Header, HostParam, HttpCode, Ip, Param, Post, Query, Redirect, Req, Res } from '@nestjs/common';
+import { Controller, Get, Header, HttpCode, Ip, Param, Post, Query} from '@nestjs/common';
 import type { HttpRedirectResponse } from '@nestjs/common'
 
 import type { Request, Response } from 'express';
 import { type CookieDecoratorReturn, Cookies } from '../decorator/cookie.decorator';
+import { UserService } from './user.service';
+import { EmployeeService } from 'src/employee/employee/employee.service';
 
 @Controller('/api/users')
 export class UserController {
+
+    constructor(private readonly userService: UserService, private readonly employeeService: EmployeeService) {}
+    
+
     @Post()
     post(): string {
         return 'POST method';
@@ -13,10 +19,7 @@ export class UserController {
 
     @Get()
     sayHello(@Query('name') name: string):string{
-        if(!name){
-            return `tidak ada nama`
-        }
-        return `nama adalah ${name}`
+        return this.employeeService.getData()
     }
     
 
