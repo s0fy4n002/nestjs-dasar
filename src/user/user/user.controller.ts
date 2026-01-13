@@ -2,7 +2,7 @@ import { Controller, Get, Header, HostParam, HttpCode, Ip, Param, Post, Query, R
 import type { HttpRedirectResponse } from '@nestjs/common'
 
 import type { Request, Response } from 'express';
-import { Cookies } from '../decorator/cookie.decorator';
+import { type CookieDecoratorReturn, Cookies } from '../decorator/cookie.decorator';
 
 @Controller('/api/users')
 export class UserController {
@@ -23,13 +23,14 @@ export class UserController {
     @Get()
     @Header('Content-Type', 'application/json')
     @HttpCode(200)
-    async findAll(@Cookies('name') cookie: { value: string, setCookie: Function }, @Ip() ip: any): Promise<Record<string, any>> {
+    async findAll(@Cookies('name') cookie: CookieDecoratorReturn, @Ip() ip: any): Promise<Record<string, any>> {
         // Set / update cookie
-        cookie.setCookie('auth-nestjs', 'eyjJwtToken', {
+        cookie.setCookie('auth-nestjs', 'yansToken', {
             httpOnly: true,
             maxAge: 3600 * 1000, // 1 jam
             secure: false,       // ubah ke true kalau HTTPS
             path: '/',
+            sameSite: 'strict',
         });
 
         let resData = { ip, message: 'berhasil edit testing' };
