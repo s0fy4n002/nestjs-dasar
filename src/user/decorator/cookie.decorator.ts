@@ -24,7 +24,7 @@ export const Cookies = createParamDecorator(
       }
     };
 
-    const cookies = request.cookies || {};
+    const cookies = request.signedCookies || request.cookies || {};
     const value = data ? cookies[data] : cookies;
 
     return { value, setCookie };

@@ -25,7 +25,7 @@ export class UserController {
     @HttpCode(200)
     async findAll(@Cookies('name') cookie: CookieDecoratorReturn, @Ip() ip: any): Promise<Record<string, any>> {
         // Set / update cookie
-        cookie.setCookie('auth-nestjs', 'yansToken', {
+        cookie.setCookie('auth-nestjs', 'yansCookie', {
             httpOnly: true,
             maxAge: 3600 * 1000, // 1 jam
             secure: false,       // ubah ke true kalau HTTPS
