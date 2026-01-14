@@ -1,4 +1,4 @@
-import { Controller, Get, Header, HttpCode, Ip, Param, Post, Query} from '@nestjs/common';
+import { Controller, Get, Header, HttpCode, Inject, Ip, Param, Post, Query } from '@nestjs/common';
 import type { HttpRedirectResponse } from '@nestjs/common'
 
 import type { Request, Response } from 'express';
@@ -6,11 +6,13 @@ import { type CookieDecoratorReturn, Cookies } from '../decorator/cookie.decorat
 import { UserService } from './user.service';
 import { EmployeeService } from 'src/employee/employee/employee.service';
 import { Connection } from '../connection/connection';
+import { MailService } from '../mail/mail.service';
 
 @Controller('/api/users')
 export class UserController {
 
-    constructor(private readonly userService: UserService, private readonly employeeService: EmployeeService, private readonly connection: Connection) {}
+    constructor(private readonly userService: UserService, private readonly employeeService: EmployeeService, private readonly connection: Connection, private readonly mailService: MailService) {}
+
     
 
     @Post()
@@ -19,10 +21,10 @@ export class UserController {
     }
 
     @Get()
-    sayHello(@Query('name') name: string):string{
+    sayHello(@Query('name') name: string): string {
         return this.employeeService.getData()
     }
-    
+
 
     @Get()
     @Header('Content-Type', 'application/json')
@@ -44,8 +46,7 @@ export class UserController {
 
     @Get('/connection')
     getConnection() {
-        console.log('database: ',process.env.DATABASE)
-        console.log('SECRET_COOKIE: ',process.env.SECRET_COOKIE)
+        this.mailService.send()
         return this.connection.getName();
     }
 

@@ -5,6 +5,7 @@ import { UserService } from './user/user.service';
 import { EmployeeService } from 'src/employee/employee/employee.service';
 import { Connection, MongoDBConnection, MySQLConnection } from './connection/connection';
 import { ConfigService } from '@nestjs/config';
+import { mailService, MailService } from './mail/mail.service';
 
 @Module({
   controllers: [UserController],
@@ -22,6 +23,10 @@ import { ConfigService } from '@nestjs/config';
           : new MongoDBConnection();
       },
       inject: [ConfigService],
+    },
+    {
+      provide: MailService,
+      useValue: mailService
     }
   ]
 })
