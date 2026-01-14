@@ -5,11 +5,12 @@ import type { Request, Response } from 'express';
 import { type CookieDecoratorReturn, Cookies } from '../decorator/cookie.decorator';
 import { UserService } from './user.service';
 import { EmployeeService } from 'src/employee/employee/employee.service';
+import { Connection } from '../connection/connection';
 
 @Controller('/api/users')
 export class UserController {
 
-    constructor(private readonly userService: UserService, private readonly employeeService: EmployeeService) {}
+    constructor(private readonly userService: UserService, private readonly employeeService: EmployeeService, private readonly connection: Connection) {}
     
 
     @Post()
@@ -40,6 +41,13 @@ export class UserController {
         return resData
     }
 
+
+    @Get('/connection')
+    getConnection() {
+        console.log('database: ',process.env.DATABASE)
+        console.log('SECRET_COOKIE: ',process.env.SECRET_COOKIE)
+        return this.connection.getName();
+    }
 
     @Get('/redirect')
     redirect(): HttpRedirectResponse {

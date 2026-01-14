@@ -1,0 +1,22 @@
+import { Injectable } from '@nestjs/common';
+
+
+export class Connection {
+    getName(): string|null {
+        return null
+    }
+}
+
+@Injectable()
+export class MySQLConnection extends Connection{
+    getName(): string | null {
+        return 'MySQL';
+    }
+}
+
+@Injectable()
+export class MongoDBConnection extends Connection{
+    getName(): string | null {
+        return 'MongoDB';
+    }
+}
