@@ -1,7 +1,16 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, OnApplicationShutdown, OnModuleInit } from '@nestjs/common';
 
 @Injectable()
-export class UserService {
+export class UserService implements OnApplicationShutdown, OnModuleInit {
+
+    onApplicationShutdown(signal: string) {
+        console.log('onApplicationShutdown: ', signal); // e.g. "SIGINT"
+    }
+
+    onModuleInit() {
+        console.log(`The module has been initialized.`);
+    }
+
     getAll() {
 
     }
@@ -10,7 +19,7 @@ export class UserService {
         if (!name) {
             return `tidak ada nama`
         }
-        
+
         return `nama adalah ${name}`
     }
 }
