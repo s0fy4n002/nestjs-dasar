@@ -34,7 +34,8 @@ import { MemberService } from './member/member.service';
       inject: [Connection]
     },
     MemberService
-  ]
+  ],
+  exports: [UserService]
 })
 export class UserModule implements NestModule {
   configure(consumer: MiddlewareConsumer) {
