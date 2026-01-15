@@ -7,11 +7,13 @@ import { UserService } from './user.service';
 import { EmployeeService } from 'src/employee/employee/employee.service';
 import { Connection } from '../connection/connection';
 import { MailService } from '../mail/mail.service';
+import { UserRepository } from '../user-repository/user-repository';
+import { MemberService } from '../member/member.service';
 
 @Controller('/api/users')
 export class UserController {
 
-    constructor(private readonly userService: UserService, private readonly employeeService: EmployeeService, private readonly connection: Connection, private readonly mailService: MailService) {}
+    constructor(private readonly userService: UserService, private readonly employeeService: EmployeeService, private readonly connection: Connection, private readonly mailService: MailService, private readonly userRepository :UserRepository, private readonly memberService :MemberService) {}
 
     
 
@@ -46,7 +48,9 @@ export class UserController {
 
     @Get('/connection')
     getConnection() {
-        this.mailService.send()
+        // this.userRepository.save();
+        // this.mailService.send()
+        this.memberService.getConnection();
         return this.connection.getName();
     }
 
