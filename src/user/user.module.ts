@@ -6,10 +6,12 @@ import { EmployeeService } from 'src/employee/employee/employee.service';
 import { Connection, createConnection, MongoDBConnection, MySQLConnection } from './connection/connection';
 import { ConfigService } from '@nestjs/config';
 import { mailService, MailService } from './mail/mail.service';
-import { createUserRepository, UserRepository } from './user-repository/user-repository';
+import { UserRepository } from './user-repository/user-repository';
 import { MemberService } from './member/member.service';
+import { PrismaModule } from 'src/prisma/prisma.module';
 
 @Module({
+  imports: [PrismaModule],
   controllers: [UserController],
   providers: [
     UserService,
@@ -28,11 +30,12 @@ import { MemberService } from './member/member.service';
       provide: MailService,
       useValue: mailService
     },
-    {
-      provide: UserRepository,
-      useFactory: createUserRepository,
-      inject: [Connection]
-    },
+    UserRepository,
+    // {
+    //   provide: UserRepository,
+    //   useFactory: createUserRepository,
+    //   inject: [Connection]
+    // },
     MemberService
   ],
   exports: [UserService]

@@ -48,9 +48,8 @@ export class UserController {
 
     @Get('/connection')
     getConnection() {
-        // this.userRepository.save();
-        // this.mailService.send()
-        this.memberService.getConnection();
+        this.userRepository.save('Muahmmad', 'sofyansyah');
+        console.log('save user')
         return this.connection.getName();
     }
 
