@@ -8,8 +8,8 @@ async function bootstrap() {
   const app = await NestFactory.create<NestExpressApplication>(AppModule);
   app.use(cookieParser(process.env.SECRET_COOKIE || 'MY Secret Yans'));
   
-  app.useStaticAssets(join(__dirname, '..', 'public'));
-  app.setBaseViewsDir(join(__dirname, '..', 'views'));
+  app.useStaticAssets(join(process.cwd(), 'public'));
+  app.setBaseViewsDir(join(process.cwd(), 'views'));
   app.setViewEngine('hbs');
   
   app.enableShutdownHooks();
