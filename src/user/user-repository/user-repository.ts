@@ -1,10 +1,11 @@
-import { Injectable } from '@nestjs/common';
-import { Connection } from '../connection/connection';
+import { Inject, Injectable } from '@nestjs/common';
 import { PrismaService } from 'src/prisma/prisma/prisma.service';
+import { WINSTON_MODULE_PROVIDER } from 'nest-winston';
+import { Logger } from 'winston';
 
 @Injectable()
 export class UserRepository {   
-    constructor(private readonly prismaService : PrismaService){
+    constructor(private readonly prismaService : PrismaService, @Inject(WINSTON_MODULE_PROVIDER) private readonly logger: Logger){
         console.log('created user repository')
     }
 
@@ -16,9 +17,7 @@ export class UserRepository {
                 last_name: lastName
             }
         })
-        Object.entries(created).forEach(i=> {
-            console.log('items '+i)
-        })
+        this.logger.info('created user '+ JSON.stringify(created))
         return created
     }
 }
