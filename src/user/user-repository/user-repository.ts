@@ -10,14 +10,15 @@ export class UserRepository {
 
     async save(firstName:string, lastName:string){
         
-        const created = await this.prismaService.employee.create({
+        const created = await this.prismaService.users.create({
             data: {
                 first_name: firstName,
                 last_name: lastName
             }
         })
-
-        console.info(`berhasil : ${created}`)
-        console.info(`user berhasil disimpan`)
+        Object.entries(created).forEach(i=> {
+            console.log('items '+i)
+        })
+        return created
     }
 }

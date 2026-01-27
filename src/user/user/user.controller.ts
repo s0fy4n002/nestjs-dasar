@@ -15,11 +15,13 @@ export class UserController {
 
     constructor(private readonly userService: UserService, private readonly employeeService: EmployeeService, private readonly connection: Connection, private readonly mailService: MailService, private readonly userRepository :UserRepository, private readonly memberService :MemberService) {}
 
-    
 
-    @Post()
-    post(): string {
-        return 'POST method';
+    @Post('/create')
+    async post(@Query('firstname') first_name: string, @Query('lastname') last_name: string): Promise<string> {
+        let created = await this.userRepository.save(first_name, last_name);
+        console.info(`berhasil : ${JSON.stringify(created)}`)
+        console.info(`user berhasil disimpan`)
+        return 'apakah berhasil:  '+JSON.stringify(created);
     }
 
     @Get()
