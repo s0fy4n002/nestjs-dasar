@@ -13,6 +13,8 @@ import { ValidationFilter } from 'src/validation/validation.filter';
 import { LoginUserRequest, loginUserRequestValidation } from 'src/model/login.model';
 import { ValidationPipe } from 'src/validation/validation.pipe';
 import { TimeInterceptor } from 'src/time/time.interceptor';
+import { Auth } from 'src/auth/auth.decorator';
+import { type Users } from 'src/generated/prisma/client';
 
 @Controller('/api/users')
 export class UserController {
@@ -38,6 +40,15 @@ export class UserController {
     @Get()
     getHello(@Query('name') name: string): string {
         return this.employeeService.getData()
+    }
+
+    @Get('/current')
+    me(@Auth() user: Users) :Record<string, any> {
+        return {
+            id: user.id,
+            first_name: user.first_name,
+            last_name: user.last_name,
+        };
     }
 
 

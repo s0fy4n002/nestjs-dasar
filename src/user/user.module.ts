@@ -8,6 +8,7 @@ import { ConfigService } from '@nestjs/config';
 import { mailService, MailService } from './mail/mail.service';
 import { UserRepository } from './user-repository/user-repository';
 import { MemberService } from './member/member.service';
+import { AuthMiddleware } from 'src/auth/auth.middleware';
 
 @Module({
   imports: [],
@@ -44,5 +45,8 @@ export class UserModule implements NestModule {
     consumer
       .apply(UserMiddleware)
       .forRoutes('/');
+    consumer
+      .apply(AuthMiddleware)
+      .forRoutes('/api/users/current');
   }
 }
