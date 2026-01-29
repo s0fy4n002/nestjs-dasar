@@ -19,7 +19,7 @@ import * as winston from 'winston'
       format: winston.format.json(),
       level: 'debug',
       transports: [new winston.transports.Console()]
-  }), PrismaModule, ValidationModule],
+  }), PrismaModule, ValidationModule.forRoot(true)],
   controllers: [AppController],
   providers: [AppService],
 })

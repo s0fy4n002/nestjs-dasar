@@ -8,7 +8,6 @@ import { ConfigService } from '@nestjs/config';
 import { mailService, MailService } from './mail/mail.service';
 import { UserRepository } from './user-repository/user-repository';
 import { MemberService } from './member/member.service';
-import { PrismaModule } from 'src/prisma/prisma.module';
 
 @Module({
   imports: [],
