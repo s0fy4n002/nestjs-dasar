@@ -1,4 +1,4 @@
-import { Controller, Get, Header, HttpCode, Inject, Ip, Param, Post, Query } from '@nestjs/common';
+import { Body, Controller, Get, Header, HttpCode, Inject, Ip, Param, ParseIntPipe, Post, Query, UseFilters, UsePipes } from '@nestjs/common';
 import type { HttpRedirectResponse } from '@nestjs/common'
 
 import type { Request, Response } from 'express';
@@ -9,6 +9,9 @@ import { Connection } from '../connection/connection';
 import { MailService } from '../mail/mail.service';
 import { UserRepository } from '../user-repository/user-repository';
 import { MemberService } from '../member/member.service';
+import { ValidationFilter } from 'src/validation/validation.filter';
+import { LoginUserRequest, loginUserRequestValidation } from 'src/model/login.model';
+import { ValidationPipe } from 'src/validation/validation.pipe';
 
 @Controller('/api/users')
 export class UserController {
@@ -24,8 +27,15 @@ export class UserController {
         return 'apakah berhasil:  '+JSON.stringify(created);
     }
 
-    @Get()
+
+    @Get('/hello')
+    @UseFilters(ValidationFilter)
     sayHello(@Query('name') name: string): string {
+        return this.userService.sayHello(name);
+    }
+
+    @Get()
+    getHello(@Query('name') name: string): string {
         return this.employeeService.getData()
     }
 
@@ -63,9 +73,21 @@ export class UserController {
         }
     }
 
+    // @Get('/:name')
+    // findName(@Param() params: any, request: Request): string {
+    //     return `params findName ${params.name}`;
+    // }
+
     @Get('/:id')
-    findOne(@Param() params: any, request: Request): string {
-        return `Method Get ${params.id}`;
+    findOne(@Param('id', ParseIntPipe) id: any, request: Request): string {
+        return `Method Get diakses ${id}`;
+    }
+
+    @UseFilters(ValidationFilter)
+    @UsePipes(new ValidationPipe(loginUserRequestValidation))
+    @Post('/login')
+    async login(@Query('name') name:string,  @Body() request: LoginUserRequest): Promise<string> {
+       return `hello ${request.username}`;
     }
 
 

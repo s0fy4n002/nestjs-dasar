@@ -43,6 +43,6 @@ export class UserModule implements NestModule {
   configure(consumer: MiddlewareConsumer) {
     consumer
       .apply(UserMiddleware)
-      .forRoutes('api/users');
+      .forRoutes('/');
   }
 }
