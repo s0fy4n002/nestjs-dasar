@@ -1,4 +1,4 @@
-import { Body, Controller, Get, Header, HttpCode, Inject, Ip, Param, ParseIntPipe, Post, Query, UseFilters, UsePipes } from '@nestjs/common';
+import { Body, Controller, Get, Header, Headers, HttpCode, Inject, Ip, Param, ParseIntPipe, Post, Query, UseFilters, UseInterceptors, UsePipes } from '@nestjs/common';
 import type { HttpRedirectResponse } from '@nestjs/common'
 
 import type { Request, Response } from 'express';
@@ -12,6 +12,7 @@ import { MemberService } from '../member/member.service';
 import { ValidationFilter } from 'src/validation/validation.filter';
 import { LoginUserRequest, loginUserRequestValidation } from 'src/model/login.model';
 import { ValidationPipe } from 'src/validation/validation.pipe';
+import { TimeInterceptor } from 'src/time/time.interceptor';
 
 @Controller('/api/users')
 export class UserController {
@@ -85,9 +86,13 @@ export class UserController {
 
     @UseFilters(ValidationFilter)
     @UsePipes(new ValidationPipe(loginUserRequestValidation))
+    @UseInterceptors(TimeInterceptor)
     @Post('/login')
-    async login(@Query('name') name:string,  @Body() request: LoginUserRequest): Promise<string> {
-       return `hello ${request.username}`;
+    @Header('Content-Type', 'application/json')
+    async login(@Query('name') name:string,  @Body() request: LoginUserRequest): Promise<any> {
+       return {
+        data: `hello ${request.username}`
+       }
     }
 
 
