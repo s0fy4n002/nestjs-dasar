@@ -38,18 +38,21 @@ export type UsersMinAggregateOutputType = {
   id: number | null
   first_name: string | null
   last_name: string | null
+  role: string | null
 }
 
 export type UsersMaxAggregateOutputType = {
   id: number | null
   first_name: string | null
   last_name: string | null
+  role: string | null
 }
 
 export type UsersCountAggregateOutputType = {
   id: number
   first_name: number
   last_name: number
+  role: number
   _all: number
 }
 
@@ -66,18 +69,21 @@ export type UsersMinAggregateInputType = {
   id?: true
   first_name?: true
   last_name?: true
+  role?: true
 }
 
 export type UsersMaxAggregateInputType = {
   id?: true
   first_name?: true
   last_name?: true
+  role?: true
 }
 
 export type UsersCountAggregateInputType = {
   id?: true
   first_name?: true
   last_name?: true
+  role?: true
   _all?: true
 }
 
@@ -171,6 +177,7 @@ export type UsersGroupByOutputType = {
   id: number
   first_name: string
   last_name: string
+  role: string | null
   _count: UsersCountAggregateOutputType | null
   _avg: UsersAvgAggregateOutputType | null
   _sum: UsersSumAggregateOutputType | null
@@ -200,12 +207,14 @@ export type UsersWhereInput = {
   id?: Prisma.IntFilter<"Users"> | number
   first_name?: Prisma.StringFilter<"Users"> | string
   last_name?: Prisma.StringFilter<"Users"> | string
+  role?: Prisma.StringNullableFilter<"Users"> | string | null
 }
 
 export type UsersOrderByWithRelationInput = {
   id?: Prisma.SortOrder
   first_name?: Prisma.SortOrder
   last_name?: Prisma.SortOrder
+  role?: Prisma.SortOrderInput | Prisma.SortOrder
   _relevance?: Prisma.UsersOrderByRelevanceInput
 }
 
@@ -216,12 +225,14 @@ export type UsersWhereUniqueInput = Prisma.AtLeast<{
   NOT?: Prisma.UsersWhereInput | Prisma.UsersWhereInput[]
   first_name?: Prisma.StringFilter<"Users"> | string
   last_name?: Prisma.StringFilter<"Users"> | string
+  role?: Prisma.StringNullableFilter<"Users"> | string | null
 }, "id">
 
 export type UsersOrderByWithAggregationInput = {
   id?: Prisma.SortOrder
   first_name?: Prisma.SortOrder
   last_name?: Prisma.SortOrder
+  role?: Prisma.SortOrderInput | Prisma.SortOrder
   _count?: Prisma.UsersCountOrderByAggregateInput
   _avg?: Prisma.UsersAvgOrderByAggregateInput
   _max?: Prisma.UsersMaxOrderByAggregateInput
@@ -236,45 +247,53 @@ export type UsersScalarWhereWithAggregatesInput = {
   id?: Prisma.IntWithAggregatesFilter<"Users"> | number
   first_name?: Prisma.StringWithAggregatesFilter<"Users"> | string
   last_name?: Prisma.StringWithAggregatesFilter<"Users"> | string
+  role?: Prisma.StringNullableWithAggregatesFilter<"Users"> | string | null
 }
 
 export type UsersCreateInput = {
   first_name: string
   last_name: string
+  role?: string | null
 }
 
 export type UsersUncheckedCreateInput = {
   id?: number
   first_name: string
   last_name: string
+  role?: string | null
 }
 
 export type UsersUpdateInput = {
   first_name?: Prisma.StringFieldUpdateOperationsInput | string
   last_name?: Prisma.StringFieldUpdateOperationsInput | string
+  role?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
 }
 
 export type UsersUncheckedUpdateInput = {
   id?: Prisma.IntFieldUpdateOperationsInput | number
   first_name?: Prisma.StringFieldUpdateOperationsInput | string
   last_name?: Prisma.StringFieldUpdateOperationsInput | string
+  role?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
 }
 
 export type UsersCreateManyInput = {
   id?: number
   first_name: string
   last_name: string
+  role?: string | null
 }
 
 export type UsersUpdateManyMutationInput = {
   first_name?: Prisma.StringFieldUpdateOperationsInput | string
   last_name?: Prisma.StringFieldUpdateOperationsInput | string
+  role?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
 }
 
 export type UsersUncheckedUpdateManyInput = {
   id?: Prisma.IntFieldUpdateOperationsInput | number
   first_name?: Prisma.StringFieldUpdateOperationsInput | string
   last_name?: Prisma.StringFieldUpdateOperationsInput | string
+  role?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
 }
 
 export type UsersOrderByRelevanceInput = {
@@ -287,6 +306,7 @@ export type UsersCountOrderByAggregateInput = {
   id?: Prisma.SortOrder
   first_name?: Prisma.SortOrder
   last_name?: Prisma.SortOrder
+  role?: Prisma.SortOrder
 }
 
 export type UsersAvgOrderByAggregateInput = {
@@ -297,12 +317,14 @@ export type UsersMaxOrderByAggregateInput = {
   id?: Prisma.SortOrder
   first_name?: Prisma.SortOrder
   last_name?: Prisma.SortOrder
+  role?: Prisma.SortOrder
 }
 
 export type UsersMinOrderByAggregateInput = {
   id?: Prisma.SortOrder
   first_name?: Prisma.SortOrder
   last_name?: Prisma.SortOrder
+  role?: Prisma.SortOrder
 }
 
 export type UsersSumOrderByAggregateInput = {
@@ -311,6 +333,10 @@ export type UsersSumOrderByAggregateInput = {
 
 export type StringFieldUpdateOperationsInput = {
   set?: string
+}
+
+export type NullableStringFieldUpdateOperationsInput = {
+  set?: string | null
 }
 
 export type IntFieldUpdateOperationsInput = {
@@ -327,6 +353,7 @@ export type UsersSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = 
   id?: boolean
   first_name?: boolean
   last_name?: boolean
+  role?: boolean
 }, ExtArgs["result"]["users"]>
 
 
@@ -335,9 +362,10 @@ export type UsersSelectScalar = {
   id?: boolean
   first_name?: boolean
   last_name?: boolean
+  role?: boolean
 }
 
-export type UsersOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "first_name" | "last_name", ExtArgs["result"]["users"]>
+export type UsersOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "first_name" | "last_name" | "role", ExtArgs["result"]["users"]>
 
 export type $UsersPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   name: "Users"
@@ -346,6 +374,7 @@ export type $UsersPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs 
     id: number
     first_name: string
     last_name: string
+    role: string | null
   }, ExtArgs["result"]["users"]>
   composites: {}
 }
@@ -718,6 +747,7 @@ export interface UsersFieldRefs {
   readonly id: Prisma.FieldRef<"Users", 'Int'>
   readonly first_name: Prisma.FieldRef<"Users", 'String'>
   readonly last_name: Prisma.FieldRef<"Users", 'String'>
+  readonly role: Prisma.FieldRef<"Users", 'String'>
 }
     
 

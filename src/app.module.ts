@@ -7,6 +7,8 @@ import { PrismaModule } from './prisma/prisma.module';
 import { WinstonModule } from 'nest-winston';
 import { ValidationModule } from './validation/validation.module';
 import * as winston from 'winston'
+import { APP_GUARD } from '@nestjs/core';
+import { RoleGuard } from './role/role.guard';
 
 @Module({
   imports: [UserModule, ConfigModule.forRoot(
@@ -21,6 +23,6 @@ import * as winston from 'winston'
       transports: [new winston.transports.Console()]
   }), PrismaModule, ValidationModule.forRoot(true)],
   controllers: [AppController],
-  providers: [AppService],
+  providers: [AppService, {provide: APP_GUARD, useClass: RoleGuard}],
 })
 export class AppModule {}

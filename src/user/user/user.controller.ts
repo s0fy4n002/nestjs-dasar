@@ -1,4 +1,4 @@
-import { Body, Controller, Get, Header, Headers, HttpCode, Inject, Ip, Param, ParseIntPipe, Post, Query, UseFilters, UseInterceptors, UsePipes } from '@nestjs/common';
+import { Body, Controller, Get, Header, Headers, HttpCode, Inject, Ip, Param, ParseIntPipe, Post, Query, UseFilters, UseGuards, UseInterceptors, UsePipes } from '@nestjs/common';
 import type { HttpRedirectResponse } from '@nestjs/common'
 
 import type { Request, Response } from 'express';
@@ -15,6 +15,8 @@ import { ValidationPipe } from 'src/validation/validation.pipe';
 import { TimeInterceptor } from 'src/time/time.interceptor';
 import { Auth } from 'src/auth/auth.decorator';
 import { type Users } from 'src/generated/prisma/client';
+import { RoleGuard } from 'src/role/role.guard';
+import { Roles } from 'src/role/roles.decorator';
 
 @Controller('/api/users')
 export class UserController {
@@ -43,6 +45,7 @@ export class UserController {
     }
 
     @Get('/current')
+    @Roles('admin2', 'user')
     me(@Auth() user: Users) :Record<string, any> {
         return {
             id: user.id,
